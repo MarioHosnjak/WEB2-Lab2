@@ -27,14 +27,13 @@ public class HomeController {
         String passwordHash = DigestUtils.sha512Hex(password).substring(0, 50);
 
         try {
-            // Hardcoded jer ne mogu hostati 2 baze podataka
-            // UserTable user = usertableRepository.findUserTableByUsername(username);
+            UserTable user = usertableRepository.findUserTableByUsername(username);
 
-            UserTable user = new UserTable();
+/*            UserTable user = new UserTable();
             user.setUsername("Mario");
-            user.setPassword(DigestUtils.sha512Hex("lozinka").substring(0, 50));
-            //if(user.equals(null)) {
-            if(!user.getUsername().equals(username)){
+            user.setPassword(DigestUtils.sha512Hex("lozinka").substring(0, 50));*/
+            if(user.equals(null)) {
+            //if(!user.getUsername().equals(username)){
                 // Wrong username
                 System.out.println("Username doesn't exist");
                 model.addAttribute("status", "Username doesn't exist");
@@ -65,12 +64,12 @@ public class HomeController {
     public String safeLogin(Model model, @RequestParam("username") String username, @RequestParam("password") String password) {
         try {
             password = password.substring(0, 50);
-            //UserTable user = usertableRepository.findUserTableByUsername(username);
-            UserTable user = new UserTable();
+            UserTable user = usertableRepository.findUserTableByUsername(username);
+            /*UserTable user = new UserTable();
             user.setUsername("Mario");
-            user.setPassword(DigestUtils.sha512Hex("lozinka").substring(0, 50));
-            //if(user.equals(null)) {
-            if(!user.getUsername().equals(username)){
+            user.setPassword(DigestUtils.sha512Hex("lozinka").substring(0, 50));*/
+            if(user.equals(null)) {
+            //if(!user.getUsername().equals(username)){
                 // Wrong username
                 System.out.println("Wrong username or password");
                 model.addAttribute("status", "Wrong username or password");
