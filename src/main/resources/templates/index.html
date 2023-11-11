@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../SDEUtils.js"></script>
+    <script src="../XSSUtils.js"></script>
+    <title>Web2 - Lab2</title>
+    <style>
+        .commentDiv {
+            background-color: bisque;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .commentDiv p {
+            margin-top: 3px;
+            margin-bottom: 3px;
+        }
+        .primjeri {
+            margin-top: 3px;
+            margin-bottom: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h2>
+        Sensitive Data Exposure
+    </h2>
+    <hr>
+    <p><strong>*Upute:</strong> Implementirane su dvije ranjivosti; slanje lozinke u plaintext obliku te vraćanje prespecifičnih rezultata prijave (npr. incorrect password).
+     Kada su ranjivosti isključene, šalje se SHA-512(password) te je rezultat prijave manje informativan.</p>
+    <strong>Test account:</strong>
+    <br>
+    Username: Mario
+    <br>
+    Password: lozinka
+    <br>
+    <br>
+
+    <div>
+        <input type="checkbox" id="vulnerabilityCheckbox" checked onclick="setVulnerabilitySDE()">
+        <label for="vulnerabilityCheckbox"><strong>Vulnerability enabled</strong></label>
+    </div>
+
+    <h3>Login form:</h3>
+    <form action="http://localhost:8080/api/unsafeLogin" method="POST" id="loginForm" >
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" required>
+        <br><br>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+        <br><br>
+        <button onclick="return setRequestData()">Submit</button>
+    </form>
+
+    <h3 id="status"></h3>
+    <br>
+    <br>
+    <!--  ################         XSS            #################  -->
+    <h2>
+        Cross-site scripting (XSS)
+    </h2>
+    <hr>
+    <p><strong>*Upute: </strong>Ovo je ranjivi web servis koji na svome backendu bez provjere sprema ulaze korisnika.
+        Zaštita je implementirana na frontendu. Ako je ranjivost isključena, radi se sanitizacija komentara.</p>
+    <p>Primjeri komentara: </p>
+    <p id="primjer1" class="primjeri"></p>
+    <p id="primjer2" class="primjeri"></p>
+    <br>
+    <div>
+        <input type="checkbox" id="vulnerabilityCheckboxXSS" onclick="setVulnerabilityXSS()">
+        <label for="vulnerabilityCheckboxXSS"><strong>Vulnerability enabled</strong></label>
+    </div>
+    <h3>Comments:</h3>
+    <div id="commentContainer"></div>
+    <br>
+    <h4>Add new comment:</h4>
+    <form action="http://localhost:8080/api/addComment" method="POST" id="commentForm" >
+        <label for="username">Username</label>
+        <input type="text" name="username" id="commentUsername" maxlength="60" required>
+        <br><br>
+        <label for="content">Comment:</label>
+        <textarea type="text" name="content" id="content" rows="3" cols="50" maxlength="200" required></textarea>
+        <br><br>
+        <button type="submit" disabled>Submit</button>
+        <span style="color: red">*Ne radi jer na Renderu može biti samo jedna baza podataka(Lab 1)!
+        Sve za bazu je isprogramirano, ali se ne koristi, tj. podaci su hardkodirani na backendu.   :(</span>
+    </form>
+
+</body>
+
+<script th:inline="javascript">
+    let vulnerabilityEnabledSDE = true;
+    let vulnerabilityEnabledXSS = false;
+
+    let status = /*[[${status}]]*/ '';
+
+    let statusElement = document.getElementById("status");
+    statusElement.textContent = status;
+    statusElement.style.color = /*[[${color}]]*/ '';
+
+    <!-- #########  -->
+
+    let primjer1 = sanitizeHTML("<img src=x onerror=javascript:alert('Cookie:'+document.cookie)>");
+    let pr1p = document.getElementById("primjer1");
+    pr1p.innerHTML = primjer1;
+
+    let primjer2 = sanitizeHTML("<img src=x onerror=javascript:document.location.href='https://www.fer.unizg.hr'>");
+    let pr2p = document.getElementById("primjer2");
+    pr2p.innerHTML = primjer2;
+
+    fetchComments(vulnerabilityEnabledXSS);
+
+</script>
+</html>
