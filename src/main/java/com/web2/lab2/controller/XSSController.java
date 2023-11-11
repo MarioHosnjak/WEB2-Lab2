@@ -20,8 +20,8 @@ public class XSSController {
 
     @GetMapping("/api/comments")
     public Iterable<Comment> getAllComments() {
-        //return commentRepository.findAll();
-        Comment comment1 = new Comment();
+        return commentRepository.findAll();
+/*        Comment comment1 = new Comment();
         comment1.setUsername("Slavko Haker");
         comment1.setContent("<img src=x onerror=\"javascript:alert('XSS-Slavko_Haker_Comment')\">");
 
@@ -31,7 +31,7 @@ public class XSSController {
 
         Iterable<Comment> iter = Arrays.asList(comment1, comment2);
 
-        return iter;
+        return iter;*/
     }
 
     @PostMapping("/api/addComment")

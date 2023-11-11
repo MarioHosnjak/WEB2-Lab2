@@ -11,7 +11,7 @@ function fetchComments(vulnerabilityEnabledXSS) {
             commentContainer.removeChild(commentContainer.firstChild);
         }
     }
-    fetch('http://localhost:8080/api/comments').then(data => data.json())
+    fetch('https://web2-lab2-jiid.onrender.com/api/comments').then(data => data.json())
         .then(data => {
             console.log(data);
             for(let i = 0; i < data.length; i++) {
