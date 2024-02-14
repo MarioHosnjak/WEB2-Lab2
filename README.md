@@ -8,7 +8,7 @@
 
 ### Sensitive data exposure
 
-![Sensitive data exposure](https://raw.githubusercontent.com/MarioHosnjak/WEB2-Lab2/main/screenshots/sensitive-data-exposure.png)
+![Sensitive data exposure](https://raw.githubusercontent.com/MarioHosnjak/WEB2-Lab2/main/screenshots/sensitive-data-exposure.PNG)
 
 ### Cross-Site Scripting (XSS)
 
