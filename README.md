@@ -8,8 +8,8 @@
 
 ### Sensitive data exposure
 
-![Sensitive data exposure](https://raw.githubusercontent.com/MarioHosnjak/WEB2-Lab2/main/screenshots/sensitive-data-exposure.PNG)
+![Sensitive data exposure](https://raw.githubusercontent.com/MarioHosnjak/WEB2-Lab2/main/screenshots/sensitive-data-exposure.PNG "Sensitive data exposure")
 
 ### Cross-Site Scripting (XSS)
 
-![XSS](./screenshots\XSS.PNG?raw=true "XSS")
+![XSS](https://raw.githubusercontent.com/MarioHosnjak/WEB2-Lab2/main/screenshots/XSS.PNG "XSS")
